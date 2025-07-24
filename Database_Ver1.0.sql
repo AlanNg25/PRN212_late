@@ -1,9 +1,9 @@
 ﻿-- Tạo cơ sở dữ liệu
 CREATE DATABASE StudentHealthManagement;
-GO
+GO;
 
 USE StudentHealthManagement;
-GO
+GO;
 
 -- Tạo bảng Parent (Phụ huynh)
 CREATE TABLE Parent (
@@ -127,8 +127,10 @@ CREATE TABLE Blog (
     Content NVARCHAR(MAX),
     DatePosted DATETIME NOT NULL DEFAULT GETDATE(),
     AuthorId INT,
+    Type INT NOT NULL DEFAULT 1, -- 1 = Medical, 2 = Other
     FOREIGN KEY (AuthorId) REFERENCES UserAccount(AccountId)
 );
+
 
 -- Tạo các chỉ mục để tối ưu hiệu suất
 CREATE INDEX IX_Student_ParentId ON Student(ParentId);
@@ -158,7 +160,10 @@ INSERT INTO Student (FullName, BirthDate, Gender, Class, ParentId) VALUES
 INSERT INTO UserAccount (Username, PasswordHash, Role) VALUES 
 ('admin', 'admin_hash', 'Admin'),
 ('nurse1', 'nurse1_hash', 'Nurse'),
-('manager1', 'manager1_hash', 'Manager');
+('manager1', 'manager1_hash', 'Manager'),
+(N'Nguyễn A', 'passAnhA', 'Parent'),
+(N'Trần B', 'passChiB', 'Parent'),
+(N'Lê C', 'passAnhC', 'Parent');
 
 INSERT INTO HealthRecord (StudentId, Allergy, ChronicDisease, MedicalHistory, Vision, Hearing) VALUES 
 (1, N'Không có', N'Không có', N'Bình thường', N'Tốt', N'Tốt'),
