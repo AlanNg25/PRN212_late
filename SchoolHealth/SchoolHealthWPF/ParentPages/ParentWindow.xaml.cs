@@ -23,5 +23,24 @@ namespace SchoolHealthWPF.ParentPages
         {
             InitializeComponent();
         }
+
+        private void btnHealthRecord_Click(object sender, RoutedEventArgs e)
+        {
+            // Mở cửa sổ hồ sơ sức khỏe
+            var healthRecordWindow = new HealthRecordWindow();
+            healthRecordWindow.ShowDialog();
+        }
+
+        private void btnSendMedicine_Click(object sender, RoutedEventArgs e)
+        {
+            // TODO: Mở cửa sổ gửi thuốc (cần tạo window tương ứng)
+            MessageBox.Show("Tính năng gửi thuốc đang phát triển.");
+        }
+
+        private void btnConfirm_Click(object sender, RoutedEventArgs e)
+        {
+            // TODO: Thực hiện xác nhận (có thể mở window hoặc xử lý logic)
+            MessageBox.Show("Tính năng xác nhận đang phát triển.");
+        }
     }
 }
