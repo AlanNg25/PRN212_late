@@ -1,11 +1,11 @@
 ﻿-- Tạo cơ sở dữ liệu
 CREATE DATABASE StudentHealthManagement;
-GO;
 
 USE StudentHealthManagement;
-GO;
 
--- Tạo bảng Parent (Phụ huynh)
+-- ==============================
+-- 1. Bảng Parent (Phụ huynh)
+-- ==============================
 CREATE TABLE Parent (
     ParentId INT IDENTITY(1,1) PRIMARY KEY,
     FullName NVARCHAR(100) NOT NULL,
@@ -13,7 +13,22 @@ CREATE TABLE Parent (
     Email NVARCHAR(100)
 );
 
--- Tạo bảng Student (Học sinh)
+-- ======================================
+-- 2. Bảng UserAccount (Tài khoản người dùng)
+-- Có liên kết đến bảng Parent (nếu là phụ huynh)
+-- ======================================
+CREATE TABLE UserAccount (
+    AccountId INT IDENTITY(1,1) PRIMARY KEY,
+    Username NVARCHAR(50) NOT NULL UNIQUE,
+    PasswordHash NVARCHAR(255) NOT NULL,
+    Role NVARCHAR(20) NOT NULL CHECK (Role IN ('Admin', 'Nurse', 'Manager', 'Parent')),
+    ParentId INT NULL,
+    FOREIGN KEY (ParentId) REFERENCES Parent(ParentId)
+);
+
+-- ==============================
+-- 3. Bảng Student (Học sinh)
+-- ==============================
 CREATE TABLE Student (
     StudentId INT IDENTITY(1,1) PRIMARY KEY,
     FullName NVARCHAR(100) NOT NULL,
@@ -24,15 +39,9 @@ CREATE TABLE Student (
     FOREIGN KEY (ParentId) REFERENCES Parent(ParentId)
 );
 
--- Tạo bảng UserAccount (Tài khoản người dùng)
-CREATE TABLE UserAccount (
-    AccountId INT IDENTITY(1,1) PRIMARY KEY,
-    Username NVARCHAR(50) NOT NULL UNIQUE,
-    PasswordHash NVARCHAR(255) NOT NULL,
-    Role NVARCHAR(20) NOT NULL CHECK (Role IN ('Admin', 'Nurse', 'Manager', 'Parent'))
-);
-
--- Tạo bảng HealthRecord (Hồ sơ sức khỏe)
+-- ==============================
+-- 4. Hồ sơ sức khỏe
+-- ==============================
 CREATE TABLE HealthRecord (
     RecordId INT IDENTITY(1,1) PRIMARY KEY,
     StudentId INT NOT NULL,
@@ -44,7 +53,9 @@ CREATE TABLE HealthRecord (
     FOREIGN KEY (StudentId) REFERENCES Student(StudentId)
 );
 
--- Tạo bảng MedicalEvent (Sự kiện y tế)
+-- ==============================
+-- 5. Sự kiện y tế
+-- ==============================
 CREATE TABLE MedicalEvent (
     EventId INT IDENTITY(1,1) PRIMARY KEY,
     StudentId INT NOT NULL,
@@ -56,7 +67,9 @@ CREATE TABLE MedicalEvent (
     FOREIGN KEY (NurseId) REFERENCES UserAccount(AccountId)
 );
 
--- Tạo bảng MedicalSupply (Vật tư y tế)
+-- ==============================
+-- 6. Vật tư y tế
+-- ==============================
 CREATE TABLE MedicalSupply (
     SupplyId INT IDENTITY(1,1) PRIMARY KEY,
     Name NVARCHAR(100) NOT NULL,
@@ -64,7 +77,9 @@ CREATE TABLE MedicalSupply (
     ExpirationDate DATE
 );
 
--- Tạo bảng MedicineSent (Thuốc gửi)
+-- ==============================
+-- 7. Thuốc gửi từ phụ huynh
+-- ==============================
 CREATE TABLE MedicineSent (
     SendId INT IDENTITY(1,1) PRIMARY KEY,
     StudentId INT NOT NULL,
@@ -76,7 +91,9 @@ CREATE TABLE MedicineSent (
     FOREIGN KEY (ParentId) REFERENCES Parent(ParentId)
 );
 
--- Tạo bảng Vaccination (Tiêm chủng)
+-- ==============================
+-- 8. Tiêm chủng
+-- ==============================
 CREATE TABLE Vaccination (
     VaccinationId INT IDENTITY(1,1) PRIMARY KEY,
     StudentId INT NOT NULL,
@@ -88,7 +105,9 @@ CREATE TABLE Vaccination (
     FOREIGN KEY (NurseId) REFERENCES UserAccount(AccountId)
 );
 
--- Tạo bảng VaccinationConsentForm (Phiếu đồng ý tiêm chủng)
+-- =======================================
+-- 9. Phiếu đồng ý tiêm chủng từ phụ huynh
+-- =======================================
 CREATE TABLE VaccinationConsentForm (
     FormId INT IDENTITY(1,1) PRIMARY KEY,
     StudentId INT NOT NULL,
@@ -99,7 +118,9 @@ CREATE TABLE VaccinationConsentForm (
     FOREIGN KEY (ParentId) REFERENCES Parent(ParentId)
 );
 
--- Tạo bảng HealthCheck (Kiểm tra sức khỏe)
+-- ==============================
+-- 10. Kiểm tra sức khỏe định kỳ
+-- ==============================
 CREATE TABLE HealthCheck (
     CheckId INT IDENTITY(1,1) PRIMARY KEY,
     StudentId INT NOT NULL,
@@ -109,7 +130,9 @@ CREATE TABLE HealthCheck (
     FOREIGN KEY (StudentId) REFERENCES Student(StudentId)
 );
 
--- Tạo bảng HealthCheckForm (Phiếu kiểm tra sức khỏe)
+-- =======================================
+-- 11. Phiếu kiểm tra sức khỏe gửi phụ huynh
+-- =======================================
 CREATE TABLE HealthCheckForm (
     FormId INT IDENTITY(1,1) PRIMARY KEY,
     StudentId INT NOT NULL,
@@ -120,7 +143,9 @@ CREATE TABLE HealthCheckForm (
     FOREIGN KEY (ParentId) REFERENCES Parent(ParentId)
 );
 
--- Tạo bảng Blog (Blog)
+-- ==============================
+-- 12. Blog chia sẻ kiến thức y tế
+-- ==============================
 CREATE TABLE Blog (
     BlogId INT IDENTITY(1,1) PRIMARY KEY,
     Title NVARCHAR(200) NOT NULL,
@@ -131,8 +156,9 @@ CREATE TABLE Blog (
     FOREIGN KEY (AuthorId) REFERENCES UserAccount(AccountId)
 );
 
-
--- Tạo các chỉ mục để tối ưu hiệu suất
+-- ==============================
+-- 13. Chỉ mục để tối ưu truy vấn
+-- ==============================
 CREATE INDEX IX_Student_ParentId ON Student(ParentId);
 CREATE INDEX IX_HealthRecord_StudentId ON HealthRecord(StudentId);
 CREATE INDEX IX_MedicalEvent_StudentId ON MedicalEvent(StudentId);
@@ -145,43 +171,3 @@ CREATE INDEX IX_MedicineSent_StudentId ON MedicineSent(StudentId);
 CREATE INDEX IX_VaccinationConsentForm_StudentId ON VaccinationConsentForm(StudentId);
 CREATE INDEX IX_HealthCheckForm_StudentId ON HealthCheckForm(StudentId);
 CREATE INDEX IX_Blog_DatePosted ON Blog(DatePosted);
-
--- Thêm một số dữ liệu mẫu
-INSERT INTO Parent (FullName, Phone, Email) VALUES 
-(N'Nguyễn Văn A', '0123456789', 'nguyenvana@email.com'),
-(N'Trần Thị B', '0987654321', 'tranthib@email.com'),
-(N'Lê Văn C', '0123987654', 'levanc@email.com');
-
-INSERT INTO Student (FullName, BirthDate, Gender, Class, ParentId) VALUES 
-(N'Nguyễn Văn D', '2010-05-15', N'Nam', N'5A', 1),
-(N'Trần Thị E', '2011-08-22', N'Nữ', N'4B', 2),
-(N'Lê Văn F', '2009-12-10', N'Nam', N'6C', 3);
-
-INSERT INTO UserAccount (Username, PasswordHash, Role) VALUES 
-('admin', 'admin_hash', 'Admin'),
-('nurse1', 'nurse1_hash', 'Nurse'),
-('manager1', 'manager1_hash', 'Manager'),
-(N'Nguyễn A', 'passAnhA', 'Parent'),
-(N'Trần B', 'passChiB', 'Parent'),
-(N'Lê C', 'passAnhC', 'Parent');
-
-INSERT INTO HealthRecord (StudentId, Allergy, ChronicDisease, MedicalHistory, Vision, Hearing) VALUES 
-(1, N'Không có', N'Không có', N'Bình thường', N'Tốt', N'Tốt'),
-(2, N'Dị ứng bụi', N'Không có', N'Từng bị viêm họng', N'Cận thị nhẹ', N'Tốt'),
-(3, N'Không có', N'Hen suyễn', N'Hen suyễn từ nhỏ', N'Tốt', N'Tốt');
-
-PRINT 'Cơ sở dữ liệu đã được tạo thành công!';
-PRINT 'Các bảng đã được tạo:';
-PRINT '- Parent (Phụ huynh)';
-PRINT '- Student (Học sinh)';
-PRINT '- UserAccount (Tài khoản người dùng)';
-PRINT '- HealthRecord (Hồ sơ sức khỏe)';
-PRINT '- MedicalEvent (Sự kiện y tế)';
-PRINT '- MedicalSupply (Vật tư y tế)';
-PRINT '- MedicineSent (Thuốc gửi)';
-PRINT '- Vaccination (Tiêm chủng)';
-PRINT '- VaccinationConsentForm (Phiếu đồng ý tiêm chủng)';
-PRINT '- HealthCheck (Kiểm tra sức khỏe)';
-PRINT '- HealthCheckForm (Phiếu kiểm tra sức khỏe)';
-PRINT '- Blog (Blog)';
-PRINT 'Đã thêm dữ liệu mẫu và tạo các chỉ mục tối ưu hiệu suất!';
