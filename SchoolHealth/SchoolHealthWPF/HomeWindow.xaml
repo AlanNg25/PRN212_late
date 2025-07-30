@@ -6,81 +6,189 @@
         xmlns:local="clr-namespace:SchoolHealthWPF"
         mc:Ignorable="d"
         WindowStartupLocation="CenterScreen"
+        Loaded="Window_Loaded"
         Title="HomeWindow" Height="450" Width="800">
     <Grid>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="10" />
-            <ColumnDefinition Width="*" />
-            <ColumnDefinition Width="10" />
-        </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
-            <RowDefinition Height="35" />
+            <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="5" />
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="5" />
+        </Grid.ColumnDefinitions>
 
-        <Grid x:Name="NavBlock" Grid.Row="0" Grid.ColumnSpan="4" >
+        <!--Header-->
+        <Grid x:Name="NavBlock" Grid.Row="0" 
+              Grid.Column="0" Grid.ColumnSpan="2">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*" />
-                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="1.5*" />
                 <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
-            
-            
-            <StackPanel Orientation="Horizontal" Grid.Column="0">
+
+            <StackPanel Orientation="Horizontal" VerticalAlignment="Center" 
+                        HorizontalAlignment="Left"
+                        Grid.Column="0">
                 <Button Style="{StaticResource PrimaryButtonStyle}" 
-                        Content="Home"  
+                        Content="Home" x:Name="btnHome" Click="btnHome_Click"
                         />
             </StackPanel>
-            
-            <StackPanel Orientation="Horizontal" Grid.Column="1">
-                <StackPanel Orientation="Horizontal" 
+
+            <StackPanel Orientation="Horizontal" VerticalAlignment="Center" 
+                        HorizontalAlignment="Center"
+                        Grid.Column="1">
+                <!--<StackPanel Orientation="Horizontal" 
                             VerticalAlignment="Center">
-                    <TextBox Width="200" />
+                    <TextBox Text="Search content in " 
+                             Width="200" FontSize="16"
+                             VerticalAlignment="Stretch" Margin="0,4,0,4" />
                     <Button Style="{StaticResource PrimaryButtonStyle}" 
                             Content="Search" />
-                </StackPanel>
+                </StackPanel>-->
             </StackPanel>
 
-            <StackPanel Orientation="Horizontal" Grid.Column="2"
-                        VerticalAlignment="Stretch" HorizontalAlignment="Right"
+            <StackPanel Orientation="Horizontal" VerticalAlignment="Center" 
+                        HorizontalAlignment="Right"
+                        Grid.Column="2"
                         >
                 <Button Style="{StaticResource PrimaryButtonStyle}" 
-                        Content="Login" />
-                <Button Style="{StaticResource PrimaryButtonStyle}" 
-                        Content="Logout" />
+                        Content="Login" x:Name="btnLogin" Click="btnLogin_Click" />
+                <Button Style="{StaticResource PrimaryButtonStyle}"
+                        Content="Logout" x:Name="btnLogout" Click="btnLogOut_Click" />
             </StackPanel>
         </Grid>
+
         <!--CONTENT-->
-        <StackPanel x:Name="maincontentContainer" 
-                    Grid.Column="1" Grid.Row="1"  
-                    ScrollViewer.VerticalScrollBarVisibility="Auto"
-                    >
-            <StackPanel>
-                <Calendar />
-            </StackPanel>
-            
-            <ScrollViewer HorizontalScrollBarVisibility="Auto"
-                  VerticalScrollBarVisibility="Disabled"
-                  Background="#FFF">
-                <StackPanel Orientation="Horizontal" Margin="10">
-                    <!-- Giả sử bạn có 10 ô blog hoặc ảnh nằm ngang -->
-                    <Border Background="LightBlue" Width="200" Height="200" Margin="5">
-                        <TextBlock Text="Blog 1" VerticalAlignment="Center" HorizontalAlignment="Center"/>
-                    </Border>
-                    <Border Background="LightGreen" Width="200" Height="200" Margin="5">
-                        <TextBlock Text="Blog 2" VerticalAlignment="Center" HorizontalAlignment="Center"/>
-                    </Border>
-                    <Border Background="Salmon" Width="200" Height="200" Margin="5">
-                        <TextBlock Text="Blog 3" VerticalAlignment="Center" HorizontalAlignment="Center"/>
-                    </Border>
-                    <Border Background="LightBlue" Width="200" Height="200" Margin="5">
-                        <TextBlock Text="Blog 1" VerticalAlignment="Center" HorizontalAlignment="Center"/>
-                    </Border>
-                    <Border Background="LightGreen" Width="200" Height="200" Margin="5">
-                        <TextBlock Text="Blog 2" VerticalAlignment="Center" HorizontalAlignment="Center"/>
-                    </Border>
+        <ScrollViewer Grid.Row="1" Grid.Column="1"
+                      HorizontalAlignment="Center"
+                      VerticalScrollBarVisibility="Auto" 
+                      HorizontalScrollBarVisibility="Disabled">
+            <StackPanel x:Name="maincontentContainer" >
+
+                <!-- Phần 1: Giới thiệu -->
+                <Label Content="About Us" Style="{StaticResource Title_1}"/>
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+
+                    <Grid Margin="0,0,5,0" Grid.Column="0">
+                        <Image Width="300" Height="Auto" Stretch="Fill"
+                               Source="/truong-fpt.png" Cursor="No" Opacity="0.55" >
+                            <Image.Effect>
+                                <BlurEffect/>
+                            </Image.Effect>
+                        </Image>
+                        <TextBlock Text="FPT University" 
+                                   FontWeight="Bold"
+                                   VerticalAlignment="Center" 
+                                   HorizontalAlignment="Center" 
+                                   FontSize="36" Cursor="No" Foreground="#FFFF2E00" 
+                                   IsEnabled="False" >
+                            <TextBlock.Effect>
+                                <DropShadowEffect BlurRadius="10" Color="White"/>
+                            </TextBlock.Effect>
+                        </TextBlock>
+                    </Grid>
+
+                    <UniformGrid Grid.Column="1" Columns="2"
+                                 VerticalAlignment="Center" >
+                        <UniformGrid Rows="2" VerticalAlignment="Center">
+                            <StackPanel Margin="0,0,5,0">
+                                <Label Content="Sứ mệnh" Padding="0,5,0,10"
+                                       FontWeight="DemiBold" FontSize="14"/>
+                                <TextBlock Text="Cung cấp năng lực cạnh tranh toàn cầu cho đông đảo người học, góp phần mở mang bờ cõi trí tuệ đất nước"
+                                               TextWrapping="Wrap"/>
+                            </StackPanel>
+                            <StackPanel Margin="0,0,5,0">
+                                <Label Content="Tầm nhìn " Padding="0,5,0,10"
+                                       FontWeight="DemiBold" FontSize="14"/>
+                                <TextBlock Text="Tầm nhìn được thể hiện trong từ khoá iGSM – [Industry Relevant – Global – Smart Education – Mega]. Trở thành một hệ thống giáo dục Mega mang tính quốc tế, đáp ứng nhu cầu xã hội và dựa trên các công nghệ đào tạo tiên tiến nhất"  
+                                               TextWrapping="Wrap"/>
+                            </StackPanel>
+                        </UniformGrid>
+
+                        <UniformGrid Rows="2">
+                            <StackPanel Margin="0,0,5,0">
+                                <Label Content="Triết lí giáo dục " Padding="0,5,0,10"
+                                       FontWeight="DemiBold" FontSize="14"/>
+                                <TextBlock Text="Giáo dục đào tạo là tổ chức và quản trị việc tự học của người học"
+                                               TextWrapping="Wrap"/>
+                            </StackPanel>
+                            <StackPanel Margin="0,0,5,0">
+                                <Label Content="Văn hóa " Padding="0,5,0,10"
+                                       HorizontalAlignment="Left"
+                                       FontWeight="DemiBold" FontSize="14"/>
+                                <TextBlock Text="Tôn đổi đồng chí gương sáng
+                                           Học thật, thi thật, thành công thật
+                                           Làm khác để làm tốt"
+                                           TextWrapping="Wrap"/>
+                            </StackPanel>
+                        </UniformGrid>
+                    </UniformGrid>
+
+                </Grid>
+
+                <!-- Phần 2: Blog -->
+                <StackPanel>
+                    <Label Content="Blog" Style="{StaticResource Title_1}"/>
+                    <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Disabled" >
+                        <ItemsControl x:Name="itemCntrolBlog">
+                            <ItemsControl.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <StackPanel Orientation="Horizontal"/>
+                                </ItemsPanelTemplate>
+                            </ItemsControl.ItemsPanel>
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate>
+                                    <Border Background="LightBlue" Width="200" Height="200" Margin="5">
+                                        <StackPanel Margin="5">
+                                            <TextBlock Text="{Binding Title}" FontWeight="Bold"/>
+                                            <TextBlock Text="{Binding DatePosted}" FontStyle="Italic" FontSize="10"/>
+                                            <TextBlock Text="{Binding Author}" />
+                                            <TextBlock Text="{Binding TypeText}" />
+                                            <TextBlock Text="{Binding Content}" TextWrapping="Wrap" FontSize="11"/>
+                                        </StackPanel>
+                                    </Border>
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
+
+                    </ScrollViewer>
                 </StackPanel>
-            </ScrollViewer>
-        </StackPanel>
+
+                <!-- Phần 3: Bài viết -->
+                <StackPanel>
+                    <Label Content="Medical" Style="{StaticResource Title_1}"/>
+                    <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Disabled" >
+                        <ItemsControl x:Name="itemCntrolBlogMedical">
+                            <ItemsControl.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <StackPanel Orientation="Horizontal"/>
+                                </ItemsPanelTemplate>
+                            </ItemsControl.ItemsPanel>
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate>
+                                    <Border Background="LightBlue" Width="200" Height="200" Margin="5">
+                                        <StackPanel Margin="5">
+                                            <TextBlock Text="{Binding Title}" FontWeight="Bold"/>
+                                            <TextBlock Text="{Binding DatePosted}" FontStyle="Italic" FontSize="10"/>
+                                            <TextBlock Text="{Binding Author}" />
+                                            <TextBlock Text="{Binding TypeText}" />
+                                            <TextBlock Text="{Binding Content}" TextWrapping="Wrap" FontSize="11"/>
+                                        </StackPanel>
+                                    </Border>
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
+                    </ScrollViewer>
+                </StackPanel>
+
+            </StackPanel>
+        </ScrollViewer>
+
     </Grid>
 </Window>

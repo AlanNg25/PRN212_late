@@ -1,6 +1,7 @@
 ﻿-- Tạo cơ sở dữ liệu
 CREATE DATABASE StudentHealthManagement;
 
+Go
 USE StudentHealthManagement;
 
 -- ==============================

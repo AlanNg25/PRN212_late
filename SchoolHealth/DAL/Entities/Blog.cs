@@ -15,5 +15,7 @@ public partial class Blog
 
     public int? AuthorId { get; set; }
 
+    public int Type { get; set; }
+
     public virtual UserAccount? Author { get; set; }
 }

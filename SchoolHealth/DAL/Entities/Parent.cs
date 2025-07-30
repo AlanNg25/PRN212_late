@@ -19,5 +19,7 @@ public partial class Parent
 
     public virtual ICollection<Student> Students { get; set; } = new List<Student>();
 
+    public virtual ICollection<UserAccount> UserAccounts { get; set; } = new List<UserAccount>();
+
     public virtual ICollection<VaccinationConsentForm> VaccinationConsentForms { get; set; } = new List<VaccinationConsentForm>();
 }
