@@ -66,10 +66,13 @@ namespace SchoolHealthWPF
                     }
                     if (user.Role == Role.Parent.ToString())
                     {
-                        ParentWindow parentWindow = new ParentWindow();
+
+                        ParentWindow parentWindow = new ParentWindow(user.ParentId ?? 0);
                         parentWindow.Show();
                         this.Close();
+
                     }
+
                 }
                 else
                 {

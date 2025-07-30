@@ -1,0 +1,64 @@
+﻿<Window x:Class="SchoolHealthWPF.ParentPages.SendMedicineWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Gửi thuốc cho trường" Height="400" Width="380"
+        WindowStartupLocation="CenterScreen"
+        Background="White">
+    <Grid Margin="20">
+        <StackPanel VerticalAlignment="Center" >
+
+            <!-- Tiêu đề -->
+            <TextBlock Text="Gửi thuốc cho học sinh"
+                       FontSize="20"
+                       FontWeight="Bold"
+                       Foreground="#2E86C1"
+                       HorizontalAlignment="Center"
+                       Margin="0,0,0,10"/>
+
+            <!-- Chọn học sinh -->
+            <TextBlock Text="Chọn học sinh:" FontWeight="SemiBold"/>
+            <ComboBox x:Name="cbStudents"
+                      DisplayMemberPath="Name"
+                      SelectedValuePath="Id"
+                      Height="32"
+                      Background="#f0f0f0"
+                      BorderBrush="#ccc"/>
+
+            <!-- Tên thuốc -->
+            <TextBlock Text="Tên thuốc:" FontWeight="SemiBold"/>
+            <TextBox x:Name="txtMedicineName"
+                     Height="32"
+                     Background="#fefefe"
+                     BorderBrush="#ccc"/>
+
+            <!-- Liều lượng -->
+            <TextBlock Text="Liều lượng:" FontWeight="SemiBold"/>
+            <TextBox x:Name="txtDosage"
+                     Height="32"
+                     Background="#fefefe"
+                     BorderBrush="#ccc"/>
+
+            <!-- Hướng dẫn uống -->
+            <TextBlock Text="Hướng dẫn uống:" FontWeight="SemiBold"/>
+            <TextBox x:Name="txtInstructions"
+                     Height="60"
+                     TextWrapping="Wrap"
+                     AcceptsReturn="True"
+                     Background="#fefefe"
+                     BorderBrush="#ccc"/>
+
+            <!-- Nút gửi -->
+            <Button Content="Gửi thông tin"
+                    Click="BtnSend_Click"
+                    Height="38"
+                    Background="#3498db"
+                    Foreground="White"
+                    FontWeight="Bold"
+                    BorderThickness="0"
+                    Cursor="Hand"
+                    Margin="0,12,0,0"
+                    BorderBrush="Transparent"
+                    HorizontalAlignment="Stretch"/>
+        </StackPanel>
+    </Grid>
+</Window>

@@ -9,18 +9,15 @@ namespace SchoolHealthWPF
     public partial class HealthRecordWindow : Window
     {
         private readonly HealthRecordService _healthRecordService;
-        private readonly StudentService _studentService;
+        private readonly List<Student> _students;
 
-        public HealthRecordWindow()
+        public HealthRecordWindow(List<Student> students)
         {
             InitializeComponent();
 
-            // Khởi tạo repository và service đúng 3-layer
             var healthRepo = new HealthRecordRepository();
-            var studentRepo = new StudentRepository();
-
             _healthRecordService = new HealthRecordService(healthRepo);
-            _studentService = new StudentService(studentRepo);
+            _students = students;
 
             LoadStudents();
         }
@@ -29,8 +26,7 @@ namespace SchoolHealthWPF
         {
             try
             {
-                var students = _studentService.GetAllStudents();
-                StudentComboBox.ItemsSource = students;
+                StudentComboBox.ItemsSource = _students;
                 StudentComboBox.DisplayMemberPath = "FullName";
                 StudentComboBox.SelectedValuePath = "StudentId";
                 StudentComboBox.SelectedIndex = -1;
@@ -43,21 +39,37 @@ namespace SchoolHealthWPF
 
         private void Submit_Click(object sender, RoutedEventArgs e)
         {
-            // Kiểm tra đã chọn học sinh chưa
             if (StudentComboBox.SelectedValue == null)
             {
                 MessageBox.Show("Vui lòng chọn học sinh.", "Thiếu thông tin", MessageBoxButton.OK, MessageBoxImage.Warning);
                 return;
             }
 
-            // Lấy thông tin từ form
-            int studentId = (int)StudentComboBox.SelectedValue;
             string allergies = AllergiesBox.Text.Trim();
             string chronicDiseases = ChronicDiseasesBox.Text.Trim();
             string vaccination = VaccinationHistoryBox.Text.Trim();
             string vision = VisionBox.Text.Trim();
             string hearing = HearingBox.Text.Trim();
 
+            // Tối thiểu bạn có thể bắt buộc nhập một trong các trường
+            if (string.IsNullOrWhiteSpace(allergies) &&
+                string.IsNullOrWhiteSpace(chronicDiseases) &&
+                string.IsNullOrWhiteSpace(vaccination) &&
+                string.IsNullOrWhiteSpace(vision) &&
+                string.IsNullOrWhiteSpace(hearing))
+            {
+                MessageBox.Show("Vui lòng nhập ít nhất một thông tin sức khỏe.", "Thiếu thông tin", MessageBoxButton.OK, MessageBoxImage.Warning);
+                return;
+            }
+
+            if (allergies.Length > 200 || chronicDiseases.Length > 200 ||
+                vaccination.Length > 300 || vision.Length > 100 || hearing.Length > 100)
+            {
+                MessageBox.Show("Một hoặc nhiều trường nhập vượt quá độ dài cho phép.", "Lỗi", MessageBoxButton.OK, MessageBoxImage.Warning);
+                return;
+            }
+
+            int studentId = (int)StudentComboBox.SelectedValue;
 
             var record = new HealthRecord
             {
@@ -67,7 +79,6 @@ namespace SchoolHealthWPF
                 MedicalHistory = vaccination,
                 Vision = vision,
                 Hearing = hearing
-
             };
 
             try
@@ -81,6 +92,7 @@ namespace SchoolHealthWPF
                 MessageBox.Show("Lỗi khi lưu hồ sơ:\n" + ex.Message, "Lỗi", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
+
 
         private void ClearForm()
         {
