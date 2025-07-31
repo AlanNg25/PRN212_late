@@ -22,6 +22,8 @@ namespace SchoolHealthWPF.AdminPages
     /// </summary>
     public partial class BlogManageView : UserControl
     {
+        public event Action RequestClose;
+
         private readonly BlogService _blogService;
 
         private bool _havePermission = true;
@@ -78,7 +80,7 @@ namespace SchoolHealthWPF.AdminPages
                 var updateBlogView = new BlogDialog();
                 updateBlogView.Blog = selectedBlog;
                 updateBlogView.ShowDialog();
-                LoadData();
+                RequestClose?.Invoke(); // Gửi tín hiệu đóng
             }
             else
             {
@@ -90,7 +92,7 @@ namespace SchoolHealthWPF.AdminPages
         {
             var createBlogView = new BlogDialog();
             createBlogView.ShowDialog();
-            LoadData();
+            RequestClose?.Invoke(); // Gửi tín hiệu đóng
         }
 
         private void btnDelete_Click(object sender, RoutedEventArgs e)

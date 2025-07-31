@@ -1,6 +1,7 @@
 ﻿using BLL.Service;
 using DAL.Entities;
 using DAL.Repo;
+using SchoolHealthWPF.NursePages;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -25,17 +26,13 @@ namespace SchoolHealthWPF.ParentPages
         private readonly int _parentId;
 
         public ParentWindow(int parentId)
-        private readonly int _parentId;
-
-        public ParentWindow(int parentId)
         {
             InitializeComponent();
             _parentId = parentId;
         }
         private void btnHealthRecord_Click(object sender, RoutedEventArgs e)
         {
-            var studentRepo = new StudentRepository();
-            var studentService = new StudentService(studentRepo);
+            var studentService = new StudentService();
 
             var students = studentService.GetStudentsByParentId(_parentId);
 
@@ -52,8 +49,7 @@ namespace SchoolHealthWPF.ParentPages
 
         private void btnSendMedicine_Click(object sender, RoutedEventArgs e)
         {
-            var studentRepo = new StudentRepository();
-            var studentService = new StudentService(studentRepo);
+            var studentService = new StudentService();
 
 
             var students = studentService.GetStudentsByParentId(_parentId);
@@ -74,11 +70,6 @@ namespace SchoolHealthWPF.ParentPages
             confirmWindow.ShowDialog();
         }
 
-        private void btnMedicalHistory_Click(object sender, RoutedEventArgs e)
-        {
-            var historyWindow = new MedicalHistoryWindow(_parentId);
-            historyWindow.ShowDialog();
-        }
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
             var homeWindow = new HomeWindow();
@@ -88,6 +79,13 @@ namespace SchoolHealthWPF.ParentPages
         private void btnHome_Click(object sender, RoutedEventArgs e)
         {
             this.Close();
+        }
+
+        private void ViewHealthHistory_Click(object sender, RoutedEventArgs e)
+        {
+            // Open the health history window for the parent
+            var historyWindow = new ParentHealthCheckHistoryWindow(_parentId);
+            historyWindow.Show();
         }
     }
 

@@ -142,7 +142,7 @@
                                     <Border Background="LightBlue" Width="200" Height="200" Margin="5">
                                         <StackPanel Margin="5">
                                             <TextBlock Text="{Binding Title}" FontWeight="Bold"/>
-                                            <TextBlock Text="{Binding DatePosted}" FontStyle="Italic" FontSize="10"/>
+                                            <TextBlock Text="{Binding DatePosted, StringFormat='{}{0:dd/MM/yyyy}'}" FontStyle="Italic" FontSize="10"/>
                                             <TextBlock Text="{Binding Author.Username}" />
                                             <TextBlock Text="{Binding TypeText}" />
                                             <TextBlock Text="{Binding Content}" TextWrapping="Wrap" FontSize="11"/>

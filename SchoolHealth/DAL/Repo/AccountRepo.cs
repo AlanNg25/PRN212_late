@@ -29,5 +29,10 @@ namespace DAL.Repo
             return null; // or throw an exception, or return a specific error message
         }
 
+        public List<UserAccount> GetAllUsers()
+        {
+            return _context.UserAccounts.Include(ua => ua.Parent).ToList();
+        }
+
     }
 }

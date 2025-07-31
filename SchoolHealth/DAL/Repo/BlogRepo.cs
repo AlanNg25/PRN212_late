@@ -17,6 +17,23 @@ namespace DAL.Repo
             _context = new StudentHealthManagementContext();
         }
 
+        public void CreateBlog(Blog blog)
+        {
+            try
+            {
+                if (blog == null)
+                {
+                    throw new ArgumentNullException(nameof(blog), "Blog cannot be null");
+                }
+                _context.Blogs.Add(blog);
+                _context.SaveChanges();
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Error creating blog", ex);
+            }
+        }
+
         public void DeleteBlog(int blogId)
         {
             try
@@ -42,6 +59,28 @@ namespace DAL.Repo
         {
             return _context.Blogs.Include(blg => blg.Author)
                 .ToList();
+        }
+
+        public void UpdateBlog(Blog blog)
+        {
+            try
+            {
+                var existingBlog = _context.Blogs.Find(blog.BlogId);
+                if (existingBlog == null)
+                {
+                    throw new Exception("Blog not found");
+                }
+                existingBlog.Title = blog.Title;
+                existingBlog.Content = blog.Content;
+                existingBlog.DatePosted = blog.DatePosted;
+                existingBlog.AuthorId = blog.AuthorId;
+                existingBlog.Type = blog.Type;
+                _context.SaveChanges();
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Error updating blog", ex);
+            }
         }
     }
 }

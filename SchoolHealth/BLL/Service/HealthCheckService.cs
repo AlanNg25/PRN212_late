@@ -26,5 +26,7 @@ public class HealthCheckService
     {
         _repository.Add(healthCheck);
     }
+
+    public void SaveHealthCheck(HealthCheck healthCheck) => _repository.Add(healthCheck);
 }
 

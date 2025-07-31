@@ -5,19 +5,111 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:SchoolHealthWPF.AdminPages"
              mc:Ignorable="d" Background="WhiteSmoke"
-             MinWidth="650" MinHeight="450"
              d:DesignHeight="450" d:DesignWidth="650">
-    <Grid>
+    <Grid Margin="10">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
+            <!-- Tiêu đề -->
+            <RowDefinition Height="Auto" />
+            <!-- Thanh tìm kiếm -->
+            <RowDefinition Height="Auto" />
+            <!-- Thống kê -->
             <RowDefinition Height="*" />
+            <!-- Nội dung chính -->
         </Grid.RowDefinitions>
 
-        <Label Grid.Row="0" Content="Dashboard View" Style="{StaticResource Title_1}" HorizontalAlignment="Left" Margin="0,10,0,0"/>
-        <ScrollViewer Grid.Row="1" 
-                      VerticalScrollBarVisibility="Auto" 
-                      HorizontalScrollBarVisibility="Disabled">
-            <!-- Nội dung của ScrollViewer -->
-        </ScrollViewer>
+        <!-- Tiêu đề -->
+        <Label Content="Dashboard View" Style="{StaticResource Title_1}" 
+               HorizontalAlignment="Left" Margin="0,0,0,10"/>
+
+        <!-- Thanh tìm kiếm -->
+        <Border Grid.Row="1" BorderThickness="1" BorderBrush="#D0D0D0" 
+                CornerRadius="8" Background="White" Padding="5" Margin="0,0,0,10">
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                <TextBox x:Name="txtSearch" Text="Tìm kiếm..." Width="520" Height="40"
+                         BorderBrush="Transparent"
+                         VerticalContentAlignment="Center" Padding="10,0" FontSize="16"
+                         GotFocus="TxtSearch_GotFocus" LostFocus="TxtSearch_LostFocus"/>
+                <Button x:Name="btnSearch" Content="Search"
+                        Style="{StaticResource PrimaryButtonStyle}"
+                        Click="BtnSearch_Click"/>
+            </StackPanel>
+        </Border>
+
+        <!-- Thống kê -->
+        <Grid Grid.Row="2" Margin="0,0,0,10">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+            <Border Grid.Column="0" Background="{DynamicResource SuccessBrush}" Margin="5" 
+                    Padding="10" CornerRadius="5">
+                <StackPanel>
+                    <TextBlock Text="Phụ huynh" FontWeight="Bold" Foreground="White"/>
+                    <TextBlock x:Name="ParentCount" Text="0" FontSize="20" Foreground="White"/>
+                </StackPanel>
+            </Border>
+            <Border Grid.Column="1" Background="{DynamicResource SuccessBrush}" Margin="5" 
+                    Padding="10" CornerRadius="5">
+                <StackPanel>
+                    <TextBlock Text="Học sinh" FontWeight="Bold" Foreground="White"/>
+                    <TextBlock x:Name="StudentCount" Text="0" FontSize="20" Foreground="White"/>
+                </StackPanel>
+            </Border>
+            <Border Grid.Column="2" Background="{DynamicResource SuccessBrush}" Margin="5" 
+                    Padding="10" CornerRadius="5">
+                <StackPanel>
+                    <TextBlock Text="Sự kiện y tế" FontWeight="Bold" Foreground="White"/>
+                    <TextBlock x:Name="MedicalEventCount" Text="0" FontSize="20" Foreground="White"/>
+                </StackPanel>
+            </Border>
+            <Border Grid.Column="3" Background="{DynamicResource SuccessBrush}" Margin="5" 
+                    Padding="10" CornerRadius="5">
+                <StackPanel>
+                    <TextBlock Text="Vật tư y tế" FontWeight="Bold" Foreground="White"/>
+                    <TextBlock x:Name="MedicalSupplyCount" Text="0" FontSize="20" Foreground="White"/>
+                </StackPanel>
+            </Border>
+        </Grid>
+
+        <!-- Nội dung chính -->
+        <Grid Grid.Row="3">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+
+            <!-- Sự kiện y tế gần đây -->
+            <GroupBox Grid.Column="0" Header="Sự kiện y tế gần đây" Margin="5">
+                <ListView x:Name="RecentMedicalEvents" MaxHeight="200" MinHeight="180">
+                    <ListView.View>
+                        <GridView>
+                            <GridViewColumn Header="Ngày" Width="120" 
+                                            DisplayMemberBinding="{Binding Date, StringFormat=dd/MM/yyyy HH:mm}"/>
+                            <GridViewColumn Header="Học sinh" Width="120" 
+                                            DisplayMemberBinding="{Binding StudentName}"/>
+                            <GridViewColumn Header="Mô tả" Width="200" 
+                                            DisplayMemberBinding="{Binding Description}"/>
+                        </GridView>
+                    </ListView.View>
+                </ListView>
+            </GroupBox>
+
+            <!-- Bài viết blog mới nhất -->
+            <GroupBox Grid.Column="1" Header="Bài viết mới nhất" Margin="5">
+                <ListView x:Name="RecentBlogs" MaxHeight="200" MinHeight="180">
+                    <ListView.View>
+                        <GridView>
+                            <GridViewColumn Header="Tiêu đề" Width="200" 
+                                            DisplayMemberBinding="{Binding Title}"/>
+                            <GridViewColumn Header="Loại" Width="120" 
+                                            DisplayMemberBinding="{Binding TypeName}"/>
+                        </GridView>
+                    </ListView.View>
+                </ListView>
+            </GroupBox>
+        </Grid>
     </Grid>
 </UserControl>

@@ -1,4 +1,5 @@
-﻿using DAL.Repo;
+﻿using DAL.Entities;
+using DAL.Repo;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,5 +18,7 @@ namespace BLL.Service
         }
 
         public object Login(string userName, string password) => _repository.Login(userName, password);
+
+        public List<UserAccount> GetAllUsers() => _repository.GetAllUsers();
     }
 }

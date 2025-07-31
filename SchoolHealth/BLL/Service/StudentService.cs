@@ -12,9 +12,9 @@ namespace BLL.Service
     {
         private readonly StudentRepository _studentRepo;
 
-        public StudentService(StudentRepository studentRepo)
+        public StudentService()
         {
-            _studentRepo = studentRepo;
+            _studentRepo = new StudentRepository();
         }
 
         public List<Student> GetAllStudents()

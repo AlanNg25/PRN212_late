@@ -1,5 +1,6 @@
 ﻿using BLL.Service;
 using DAL.Entities;
+using DAL.Repo;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -21,17 +22,20 @@ namespace SchoolHealthWPF.NursePages
     /// </summary>
     public partial class NurseWindow : Window
     {
+        private readonly UserAccount user;
         private List<Student> students;
-        private readonly HealthCheckService _healthCheckService = new HealthCheckService();
+        private readonly HealthCheckService _healthCheckService;
 
         public NurseWindow()
         {
             InitializeComponent();
+            user = (UserAccount)Application.Current.Properties["UserLog"];
             Loaded += NurseWindow_Loaded;
             StudentDataGrid.SelectionChanged += StudentDataGrid_SelectionChanged;
 
-            // No need to assign EventDescriptionTextBox and TreatmentTextBox here,
-            // they are already initialized by the designer as internal fields.
+            // You need to provide an IHealthCheckRepository implementation here
+            var repository = new HealthCheckRepository(); // Use your concrete implementation
+            _healthCheckService = new HealthCheckService(repository);
         }
 
         private void NurseWindow_Loaded(object sender, RoutedEventArgs e)
@@ -89,18 +93,11 @@ namespace SchoolHealthWPF.NursePages
                     Date = DateOnly.FromDateTime(DateTime.Now),
                 };
 
-                bool saveResult = _healthCheckService.SaveHealthCheck(healthCheck);
+                _healthCheckService.SaveHealthCheck(healthCheck);
 
-                if (saveResult)
-                {
-                    MessageBox.Show("Lưu kết quả khám sức khỏe thành công.", "Thành công", MessageBoxButton.OK, MessageBoxImage.Information);
-                    NoteTextBox.Clear();
-                    ResultTextBox.Clear();
-                }
-                else
-                {
-                    MessageBox.Show("Không thể lưu dữ liệu. Vui lòng thử lại.", "Lỗi", MessageBoxButton.OK, MessageBoxImage.Error);
-                }
+                MessageBox.Show("Lưu kết quả khám sức khỏe thành công.", "Thành công", MessageBoxButton.OK, MessageBoxImage.Information);
+                NoteTextBox.Clear();
+                ResultTextBox.Clear();
             }
             catch (Exception ex)
             {
@@ -167,6 +164,7 @@ namespace SchoolHealthWPF.NursePages
                 {
                     StudentId = selectedStudent.StudentId,
                     Date = DateTime.Now,
+                    NurseId = user.AccountId,
                     Description = description,
                     TreatmentGiven = treatment,
                     // Không liên kết trực tiếp với MedicalSupply vì database không hỗ trợ
@@ -202,8 +200,14 @@ namespace SchoolHealthWPF.NursePages
 
         private void OpenHealthCheckHistory_Click(object sender, RoutedEventArgs e)
         {
-            var historyWindow = new HealthCheckHistoryWindow(); // Đã có
+            var historyWindow = new HealthCheckHistoryWindow();
             historyWindow.Show();
+        }
+
+        private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            HomeWindow homeWindow = new HomeWindow();
+            homeWindow.Show();
         }
     }
 }

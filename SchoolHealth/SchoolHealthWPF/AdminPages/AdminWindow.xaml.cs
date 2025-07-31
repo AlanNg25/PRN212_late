@@ -73,7 +73,12 @@ namespace SchoolHealthWPF.AdminPages
         }
         private void btnBlogManage_Click(object sender, RoutedEventArgs e)
         {
-            mainContent.Content = new BlogManageView(havePermission);
+            var blogManageView = new BlogManageView(havePermission);
+            blogManageView.RequestClose += () =>
+            {
+                mainContent.Content = null;
+            };
+            mainContent.Content = blogManageView;
         }
 
         private void btnLogOut_Click(object sender, RoutedEventArgs e)

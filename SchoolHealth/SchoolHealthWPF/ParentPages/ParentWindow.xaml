@@ -2,12 +2,12 @@
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         Title="Parent Dashboard"
-        Height="380" Width="500"
+        Height="Auto" Width="Auto"
         WindowStartupLocation="CenterScreen"
         Closing="Window_Closing"
         Background="#F8F9FA">
     <Grid>
-        <Border Background="White" Padding="20" CornerRadius="10" 
+        <Border Background="White" Padding="20" CornerRadius="10" Margin="10"
                 BorderBrush="#D6D6D6" BorderThickness="1" 
                 HorizontalAlignment="Center" VerticalAlignment="Center"
                 Width="280">
@@ -29,11 +29,16 @@
                            Foreground="#2C3E50"
                            HorizontalAlignment="Center"
                            Margin="0,0,0,20"/>
-                <!-- New from branch addHealth -->
-                           <Button Content="Xem lịch sử kiểm tra sức khỏe của con"
-                    Width="250" Height="40"
-                    Click="ViewHealthHistory_Click"
-                    Style="{StaticResource PrimaryButtonStyle}" />
+
+                <Button Content="Lịch sử kiểm tra sức khỏe của con"
+                        Click="ViewHealthHistory_Click"
+                        Height="45"
+                        Background="#9B59B6"
+                        Foreground="White"
+                        FontWeight="Bold"
+                        Margin="0,0,0,10"
+                        BorderThickness="0"
+                        Cursor="Hand" />
 
                 <Button x:Name="btnHealthRecord"
                         Content=" Hồ sơ sức khỏe"
@@ -67,15 +72,6 @@
                         Margin="0,0,0,8"
                         BorderThickness="0"
                         Cursor="Hand"/>
-                <Button x:Name="btnMedicalHistory"
-        Content=" Lịch sử khám bệnh"
-        Click="btnMedicalHistory_Click"
-        Height="45"
-        Background="#9B59B6"
-        Foreground="White"
-        FontWeight="Bold"
-        BorderThickness="0"
-        Cursor="Hand"/>
 
             </StackPanel>
         </Border>

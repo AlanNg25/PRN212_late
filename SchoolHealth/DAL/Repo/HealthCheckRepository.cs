@@ -13,9 +13,9 @@ public class HealthCheckRepository : IHealthCheckRepository
 {
     private readonly StudentHealthManagementContext _context;
 
-    public HealthCheckRepository(StudentHealthManagementContext context)
+    public HealthCheckRepository()
     {
-        _context = context;
+        _context = new StudentHealthManagementContext();
     }
 
     public IEnumerable<HealthCheck> GetByStudentId(int studentId)

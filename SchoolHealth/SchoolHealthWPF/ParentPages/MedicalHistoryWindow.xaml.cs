@@ -25,8 +25,7 @@ namespace SchoolHealthWPF.ParentPages
         {
             InitializeComponent();
 
-            var studentRepo = new StudentRepository();
-            var studentService = new StudentService(studentRepo);
+            var studentService = new StudentService();
             var students = studentService.GetStudentsByParentId(parentId);
 
             if (students == null || !students.Any())
@@ -36,7 +35,7 @@ namespace SchoolHealthWPF.ParentPages
             }
 
             var context = new StudentHealthManagementContext();
-            var healthCheckRepo = new HealthCheckRepository(context);
+            var healthCheckRepo = new HealthCheckRepository();
             var healthCheckService = new HealthCheckService(healthCheckRepo);
 
             var allChecks = new List<HealthCheck>();

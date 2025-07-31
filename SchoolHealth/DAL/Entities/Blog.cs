@@ -15,7 +15,7 @@ public partial class Blog
 
     public int? AuthorId { get; set; }
 
-    public int Type { get; set; }
+    public int Type { get; set; } // 1: Chia sẻ kiến thức y tế, 2:  mẹo vặt
 
     public virtual UserAccount? Author { get; set; }
 }
