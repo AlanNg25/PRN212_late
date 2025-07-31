@@ -24,6 +24,7 @@
         <SolidColorBrush x:Key="WarningBrush" Color="{StaticResource WarningColor}"/>
         <SolidColorBrush x:Key="ErrorBrush" Color="{StaticResource ErrorColor}"/>
 
+        
         <Style TargetType="Window" >
             <Setter Property="FontFamily" Value="Times New Roman"/>
             <Setter Property="Width" Value="450" />
@@ -76,7 +77,7 @@
             </Setter>
         </Style>
 
-    
+        
 
     </Application.Resources>
 </Application>

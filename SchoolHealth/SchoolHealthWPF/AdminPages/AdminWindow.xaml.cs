@@ -67,7 +67,9 @@ namespace SchoolHealthWPF.AdminPages
         }
         private void btnUserManage_Click(object sender, RoutedEventArgs e)
         {
-            mainContent.Content = new UserManage(havePermission);
+            // mainContent.Content = new UserManage(havePermission);
+            var userManagementWindow = new UserManagement();
+            userManagementWindow.Show();
         }
         private void btnBlogManage_Click(object sender, RoutedEventArgs e)
         {

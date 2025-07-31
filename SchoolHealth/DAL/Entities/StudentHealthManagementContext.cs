@@ -233,7 +233,7 @@ public partial class StudentHealthManagementContext : DbContext
             entity.Property(e => e.Role).HasMaxLength(20);
             entity.Property(e => e.Username).HasMaxLength(50);
 
-            entity.HasOne(d => d.Parent).WithMany(p => p.UserAccounts)
+            object value = entity.HasOne(d => d.Parent).WithMany(p => p.UserAccounts)
                 .HasForeignKey(d => d.ParentId)
                 .HasConstraintName("FK__UserAccou__Paren__3B75D760");
         });

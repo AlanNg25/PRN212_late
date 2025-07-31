@@ -25,6 +25,9 @@ namespace SchoolHealthWPF.ParentPages
         private readonly int _parentId;
 
         public ParentWindow(int parentId)
+        private readonly int _parentId;
+
+        public ParentWindow(int parentId)
         {
             InitializeComponent();
             _parentId = parentId;
