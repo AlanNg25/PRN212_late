@@ -67,9 +67,15 @@ namespace SchoolHealthWPF.ParentPages
         }
         private void btnConfirm_Click(object sender, RoutedEventArgs e)
         {
-            MessageBox.Show("Tính năng xác nhận đang phát triển.");
+            var confirmWindow = new HealthCheckFormConfirmWindow(_parentId);
+            confirmWindow.ShowDialog();
         }
 
+        private void btnMedicalHistory_Click(object sender, RoutedEventArgs e)
+        {
+            var historyWindow = new MedicalHistoryWindow(_parentId);
+            historyWindow.ShowDialog();
+        }
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
             var homeWindow = new HomeWindow();

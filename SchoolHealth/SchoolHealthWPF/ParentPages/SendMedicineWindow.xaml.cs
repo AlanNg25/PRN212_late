@@ -32,7 +32,7 @@ namespace SchoolHealthWPF.ParentPages
                 cbStudents.DisplayMemberPath = "FullName";
                 cbStudents.SelectedValuePath = "StudentId";
                 cbStudents.SelectedIndex = -1;
-            }
+            }   
             catch (Exception ex)
             {
                 MessageBox.Show("Lỗi khi tải danh sách học sinh: " + ex.Message);
