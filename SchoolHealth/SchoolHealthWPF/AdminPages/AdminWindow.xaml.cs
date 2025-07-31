@@ -51,7 +51,9 @@ namespace SchoolHealthWPF.AdminPages
         }
         private void btnUserManage_Click(object sender, RoutedEventArgs e)
         {
-
+            var userManagementWindow = new UserManagement();
+            userManagementWindow.Show();
+            this.Hide();
         }
     }
 }

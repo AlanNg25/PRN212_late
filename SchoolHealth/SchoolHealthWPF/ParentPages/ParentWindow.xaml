@@ -5,8 +5,19 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:SchoolHealthWPF.ParentPages"
         mc:Ignorable="d"
-        Title="ParentWindow" Height="450" Width="800">
-    <Grid>
-        
+        Title="Trang phụ huynh"
+        Height="300" Width="400"
+        WindowStartupLocation="CenterScreen">
+    <Grid Background="WhiteSmoke" Margin="20">
+        <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" >
+            <TextBlock Text="Xin chào, phụ huynh!" FontSize="20" FontWeight="Bold" HorizontalAlignment="Center"/>
+
+            <Button Content="Xem lịch sử kiểm tra sức khỏe của con"
+                    Width="250" Height="40"
+                    Click="ViewHealthHistory_Click"
+                    Style="{StaticResource PrimaryButtonStyle}" />
+
+            <Button Content="Đăng xuất" Width="100" Height="30" Click="Logout_Click"/>
+        </StackPanel>
     </Grid>
 </Window>

@@ -16,4 +16,5 @@ public partial class HealthCheck
     public string? DoctorNotes { get; set; }
 
     public virtual Student Student { get; set; } = null!;
+
 }

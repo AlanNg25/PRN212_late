@@ -19,9 +19,24 @@ namespace SchoolHealthWPF.ParentPages
     /// </summary>
     public partial class ParentWindow : Window
     {
-        public ParentWindow()
+        private readonly int _parentId;
+
+        public ParentWindow(int parentId)
         {
             InitializeComponent();
+            _parentId = parentId;
+        }
+
+        private void ViewHealthHistory_Click(object sender, RoutedEventArgs e)
+        {
+            var historyWindow = new ParentHealthCheckHistoryWindow(_parentId);
+            historyWindow.ShowDialog();
+        }
+
+        private void Logout_Click(object sender, RoutedEventArgs e)
+        {
+            // Optionally: go back to login window
+            this.Close();
         }
     }
 }

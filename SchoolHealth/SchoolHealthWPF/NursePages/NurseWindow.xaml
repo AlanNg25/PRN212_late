@@ -5,8 +5,69 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:SchoolHealthWPF.NursePages"
         mc:Ignorable="d"
-        Title="NurseWindow" Height="450" Width="800">
-    <Grid>
-        
+        Title="NurseWindow" Height="600" Width="900">
+    <Grid Margin="10">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <!-- Tiêu đề -->
+        <DockPanel Grid.Row="0" Margin="0,0,0,10">
+            <TextBlock Text="Quản lý Sức khỏe Học sinh - Y tá"
+                       FontSize="24" FontWeight="Bold"
+                       HorizontalAlignment="Left" DockPanel.Dock="Left"/>
+
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" DockPanel.Dock="Right">
+                <Button Content="Kho vật tư" Width="100" Margin="5,0" Click="OpenMedicalSupplyPage_Click"/>
+                <Button Content="Lịch sử khám" Width="120" Margin="5,0" Click="OpenHealthCheckHistory_Click"/>
+            </StackPanel>
+        </DockPanel>
+        <!-- Nội dung chính -->
+        <Grid Grid.Row="1" Margin="0,20,0,0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="2*"/>
+                <ColumnDefinition Width="3*"/>
+            </Grid.ColumnDefinitions>
+
+            <!-- Danh sách học sinh -->
+            <GroupBox Header="Danh sách học sinh" Margin="10">
+                <DataGrid x:Name="StudentDataGrid" AutoGenerateColumns="False" IsReadOnly="True" SelectionMode="Single">
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Header="Mã HS" Binding="{Binding StudentId}" Width="*"/>
+                        <DataGridTextColumn Header="Họ tên" Binding="{Binding FullName}" Width="*"/>
+                        <DataGridTextColumn Header="Lớp" Binding="{Binding Class}" Width="*"/>
+                    </DataGrid.Columns>
+                </DataGrid>
+            </GroupBox>
+
+            <!-- Thông tin khám -->
+            <GroupBox Header="Ghi nhận khám sức khỏe" Grid.Column="1" Margin="10">
+                <StackPanel Margin="10">
+                    <TextBlock Text="Ghi chú:"/>
+                    <TextBox x:Name="NoteTextBox" Margin="0,5" Height="60" TextWrapping="Wrap" AcceptsReturn="True"/>
+
+                    <TextBlock Text="Kết quả khám:" Margin="0,10,0,0"/>
+                    <TextBox x:Name="ResultTextBox" Margin="0,5" Height="30"/>
+
+                    <Button Content="Lưu kết quả" Margin="0,10,0,0" Height="30" Width="120" HorizontalAlignment="Right"
+                            Click="SaveHealthCheck_Click"/>
+                </StackPanel>
+            </GroupBox>
+
+            <!-- Ghi nhận sự kiện y tế -->
+            <GroupBox Header="Ghi nhận sự kiện y tế" Grid.Column="1" Margin="10,220,10,10">
+                <StackPanel Margin="10">
+                    <TextBlock Text="Mô tả sự kiện:"/>
+                    <TextBox x:Name="EventDescriptionTextBox" Margin="0,5" Height="60" TextWrapping="Wrap" AcceptsReturn="True"/>
+
+                    <TextBlock Text="Điều trị đã thực hiện:" Margin="0,10,0,0"/>
+                    <TextBox x:Name="TreatmentTextBox" Margin="0,5" Height="30"/>
+
+                    <Button Content="Lưu sự kiện y tế" Margin="0,10,0,0" Height="30" Width="120" HorizontalAlignment="Right"
+                            Click="SaveMedicalEvent_Click"/>
+                </StackPanel>
+            </GroupBox>
+        </Grid>
     </Grid>
 </Window>

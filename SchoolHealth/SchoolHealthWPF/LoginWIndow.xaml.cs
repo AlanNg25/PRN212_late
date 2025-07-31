@@ -66,7 +66,13 @@ namespace SchoolHealthWPF
                     }
                     if (user.Role == Role.Parent.ToString())
                     {
-                        ParentWindow parentWindow = new ParentWindow();
+                        if (user.ParentId == null)
+                        {
+                            MessageBox.Show("Tài khoản phụ huynh chưa được gán với hồ sơ phụ huynh.");
+                            return;
+                        }
+
+                        ParentWindow parentWindow = new ParentWindow(user.ParentId.Value);
                         parentWindow.Show();
                         this.Close();
                     }

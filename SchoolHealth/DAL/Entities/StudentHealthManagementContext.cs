@@ -41,7 +41,7 @@ public partial class StudentHealthManagementContext : DbContext
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see https://go.microsoft.com/fwlink/?LinkId=723263.
-        => optionsBuilder.UseSqlServer("Server=(local);uid=sa;pwd=1234567890;database=StudentHealthManagement;TrustServerCertificate=True;");
+        => optionsBuilder.UseSqlServer("Server=DATLE\\SQLEXPRESS;uid=sa;pwd=12345;database=StudentHealthManagement;TrustServerCertificate=True;");
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -221,7 +221,7 @@ public partial class StudentHealthManagementContext : DbContext
             entity.Property(e => e.Role).HasMaxLength(20);
             entity.Property(e => e.Username).HasMaxLength(50);
 
-            entity.HasOne(d => d.Parent).WithMany(p => p.UserAccounts)
+            object value = entity.HasOne(d => d.Parent).WithMany(p => p.UserAccounts)
                 .HasForeignKey(d => d.ParentId)
                 .HasConstraintName("FK__UserAccou__Paren__3B75D760");
         });

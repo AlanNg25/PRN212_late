@@ -20,4 +20,5 @@ public partial class MedicalEvent
     public virtual UserAccount? Nurse { get; set; }
 
     public virtual Student Student { get; set; } = null!;
+
 }
