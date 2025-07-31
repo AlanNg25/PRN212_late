@@ -17,8 +17,7 @@ namespace SchoolHealthWPF.ParentPages
         {
             InitializeComponent();
             _students = students;
-
-            
+            _medicineService = new MedicineRequestService(new MedicineRequestRepository(new StudentHealthManagementContext()));
             cbStudents.ItemsSource = _students;
             cbStudents.DisplayMemberPath = "FullName";
             cbStudents.SelectedValuePath = "StudentId";
@@ -79,6 +78,7 @@ namespace SchoolHealthWPF.ParentPages
             var request = new MedicineSent
             {
                 StudentId = selectedStudent.StudentId,
+                ParentId = selectedStudent.ParentId.Value,
                 MedicineName = name,
                 Dosage = dosage,
                 Instruction = instructions

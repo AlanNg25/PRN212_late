@@ -69,6 +69,12 @@ namespace SchoolHealthWPF.ParentPages
         {
             MessageBox.Show("Tính năng xác nhận đang phát triển.");
         }
+
+        private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            var homeWindow = new HomeWindow();
+            homeWindow.Show();
+        }
     }
 
 }

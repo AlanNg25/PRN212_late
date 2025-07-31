@@ -4,6 +4,7 @@
         Title="Parent Dashboard"
         Height="300" Width="400"
         WindowStartupLocation="CenterScreen"
+        Closing="Window_Closing"
         Background="#F8F9FA">
     <Grid>
         <Border Background="White" Padding="20" CornerRadius="10" 

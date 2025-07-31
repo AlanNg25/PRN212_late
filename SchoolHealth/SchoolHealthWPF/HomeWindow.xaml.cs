@@ -33,7 +33,12 @@ namespace SchoolHealthWPF
             var user = Application.Current.Properties["UserLog"] as UserAccount;
             if (user == null)
             {
+                btnLogin.Visibility = Visibility.Visible;
                 btnLogout.Visibility = Visibility.Collapsed;
+            }else
+            {
+                btnLogin.Visibility = Visibility.Collapsed;
+                btnLogout.Visibility = Visibility.Visible;
             }
         }
 

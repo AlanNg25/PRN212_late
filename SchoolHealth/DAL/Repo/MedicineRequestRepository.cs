@@ -18,8 +18,15 @@ namespace DAL.Repo
 
         public void Add(MedicineSent request)
         {
-            _context.MedicineSents.Add(request);
-            _context.SaveChanges();
+            try
+            {
+                _context.MedicineSents.Add(request);
+                _context.SaveChanges();
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
         }
 
      
