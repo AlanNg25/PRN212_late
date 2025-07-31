@@ -34,5 +34,15 @@ namespace DAL.Repo
             return _context.UserAccounts.Include(ua => ua.Parent).ToList();
         }
 
+        public List<Parent> GetParents()
+        {
+            return _context.Parents.ToList();
+        }
+
+        public List<Student> GetStudents()
+        {
+            return _context.Students.Include(s => s.Parent).ToList();
+        }
+
     }
 }

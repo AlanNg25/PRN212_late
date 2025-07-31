@@ -20,5 +20,9 @@ namespace BLL.Service
         public object Login(string userName, string password) => _repository.Login(userName, password);
 
         public List<UserAccount> GetAllUsers() => _repository.GetAllUsers();
+
+        public List<Student> GetStudents() => _repository.GetStudents();
+
+        public List<Parent> GetParents() => _repository.GetParents();
     }
 }

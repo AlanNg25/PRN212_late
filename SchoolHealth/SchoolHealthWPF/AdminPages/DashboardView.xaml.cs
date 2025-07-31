@@ -21,42 +21,48 @@ namespace SchoolHealthWPF.AdminPages
     {
         private List<MedicalEventViewModel> allMedicalEvents;
         private readonly StudentService _studentService;
+        private readonly AccountService _accountService;
+        private readonly BlogService _blogService;
+        private readonly MedicalEventService _medicalEventService;
+        private readonly MedicalSupplyService _medicalSupplyService;
 
         public DashboardView()
         {
             InitializeComponent();
+            var context = new StudentHealthManagementContext();
             _studentService = new StudentService();
+            _accountService = new AccountService();
+            _blogService = new BlogService();
+            _medicalEventService = new MedicalEventService();
+            _medicalSupplyService = new MedicalSupplyService(context);
             LoadDashboardData();
         }
 
         private void LoadDashboardData()
         {
             // Static data (replace with database queries)
-            var parents = new List<Parent>
-            {
-                new Parent { ParentId = 1, FullName = "Nguyễn Văn A" },
-                new Parent { ParentId = 2, FullName = "Lê Thị B" }
-            };
+            var parents = _accountService.GetParents();
 
             var students = _studentService.GetAllStudents();
 
-            allMedicalEvents = new List<MedicalEventViewModel>
-            {
-                new MedicalEventViewModel { StudentId = 1, Date = DateTime.Parse("2024-10-01 09:00"), Description = "Đau bụng sau giờ ăn", StudentName = "Nguyễn Minh Khoa" },
-                new MedicalEventViewModel { StudentId = 2, Date = DateTime.Parse("2024-11-15 14:00"), Description = "Té ngã nhẹ trong giờ ra chơi", StudentName = "Lê Mai Linh" }
-            };
+            allMedicalEvents = _medicalEventService.GetMedicalEvents()
+                .Select(me => new MedicalEventViewModel
+                {
+                    StudentId = me.StudentId,
+                    Date = me.Date,
+                    Description = me.Description,
+                    StudentName = me.Student?.FullName ?? "Unknown"
+                }).ToList();
 
-            var medicalSupplies = new List<MedicalSupply>
-            {
-                new MedicalSupply { Name = "Băng cá nhân", Quantity = 200, ExpirationDate = DateOnly.Parse("2026-01-01") },
-                new MedicalSupply { Name = "Cồn y tế 70%", Quantity = 50, ExpirationDate = DateOnly.Parse("2025-12-31") }
-            };
+            var medicalSupplies = _medicalSupplyService.GetAllSupplies()
+                .Select(s => new MedicalSupply
+                {
+                    SupplyId = s.SupplyId,
+                    Name = s.Name,
+                    Quantity = s.Quantity
+                }).ToList();
 
-            var blogs = new List<Blog>
-            {
-                new Blog { Title = "Làm sao để trẻ không sợ tiêm?", Type = 1 },
-                new Blog { Title = "Cách chăm sóc sức khỏe mùa thi", Type = 2 }
-            };
+            var blogs = _blogService.GetAllBlogs();
 
             // Update statistics
             ParentCount.Text = parents.Count.ToString();
@@ -69,7 +75,7 @@ namespace SchoolHealthWPF.AdminPages
             RecentBlogs.ItemsSource = blogs.Select(b => new BlogViewModel
             {
                 Title = b.Title,
-                TypeName = b.Type == 1 ? "Chia sẻ kiến thức y tế" : "Hướng dẫn sinh hoạt"
+                TypeName = b.Type == 1 ? "Blog" : "Medical"
             }).Take(5).ToList();
         }
 
