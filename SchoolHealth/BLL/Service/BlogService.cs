@@ -18,6 +18,8 @@ namespace BLL.Service
             _repository = new BlogRepo();
         }
 
+        public void DeleteBlog(int blogId) => _repository.DeleteBlog(blogId);
+
         public List<Blog> GetAllBlogs() => _repository.GetAllBlogs();
 
     }

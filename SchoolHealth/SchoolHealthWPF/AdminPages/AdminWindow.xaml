@@ -19,21 +19,29 @@
                 <Label x:Name="userName" Content="username"
                        HorizontalAlignment="Center" VerticalAlignment="Center"
                        Style="{StaticResource Title_1}"/>
-                <TextBlock x:Name="role" Text="Admin/Manager" 
+                <TextBlock x:Name="roletxt" Text="Admin/Manager" 
                            Padding="4"
                            HorizontalAlignment="Center" VerticalAlignment="Center" />
             </StackPanel>
-            
-            
+
+
             <Button Style="{StaticResource PrimaryButtonStyle}" 
                     Content="Home" x:Name="btnHome" Click="btnHome_Click"
                     />
-            <Button Background="AliceBlue"
+            <Button Style="{StaticResource PrimaryButtonStyle}" 
+                    Content="Dashboard" x:Name="btnDashboard" Click="btnDashboard_Click"
+                    />
+            <Button Style="{StaticResource PrimaryButtonStyle}"
                     Content="Quản lý người dùng" x:Name="btnUserManage" Click="btnUserManage_Click"/>
+            <Button Style="{StaticResource PrimaryButtonStyle}"
+                    Content="Quản lý Blog" x:Name="btnBlogManage" Click="btnBlogManage_Click"/>
+
+            <Button Style="{StaticResource PrimaryButtonStyle}" Background="DarkGray"
+                    Content="Log Out" x:Name="btnLogout" Click="btnLogOut_Click"/>
         </StackPanel>
 
         <StackPanel Grid.Column="1">
-
+            <ContentControl x:Name="mainContent"/>
         </StackPanel>
 
     </Grid>

@@ -1,0 +1,23 @@
+﻿<UserControl x:Class="SchoolHealthWPF.AdminPages.DashboardView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:SchoolHealthWPF.AdminPages"
+             mc:Ignorable="d" Background="WhiteSmoke"
+             MinWidth="650" MinHeight="450"
+             d:DesignHeight="450" d:DesignWidth="650">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+
+        <Label Grid.Row="0" Content="Dashboard View" Style="{StaticResource Title_1}" HorizontalAlignment="Left" Margin="0,10,0,0"/>
+        <ScrollViewer Grid.Row="1" 
+                      VerticalScrollBarVisibility="Auto" 
+                      HorizontalScrollBarVisibility="Disabled">
+            <!-- Nội dung của ScrollViewer -->
+        </ScrollViewer>
+    </Grid>
+</UserControl>

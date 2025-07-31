@@ -21,8 +21,16 @@ namespace SchoolHealthWPF.AdminPages
     /// </summary>
     public partial class AdminWindow : Window
     {
+        public enum UserRole
+        {
+            Admin,
+            Manager,
+        }
+
         public UserAccount? user { get; set; }
         public int Role { get; set; }
+
+        private bool havePermission = true; // Biến này có thể được sử dụng để kiểm tra quyền truy cập
         public AdminWindow()
         {
             InitializeComponent();
@@ -30,28 +38,53 @@ namespace SchoolHealthWPF.AdminPages
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
+            userName.Content = user?.Username;
             SetPermission(this.Role);
         }
 
         private void SetPermission(int role)
         {
-            if (role == 0)
+            if (role == (int)UserRole.Admin)
             {
-                Console.Write("");
+                roletxt.Text = "Quản trị viên";
             }
-            else
+            else if (role == (int)UserRole.Manager)
             {
-                Console.Write("al");
+                roletxt.Text = "Quản lý";
+                havePermission = false; // Manager không có quyền chỉnh sửa trong UserManage
             }
         }
 
         private void btnHome_Click(object sender, RoutedEventArgs e)
         {
-            
+            HomeWindow homepage = new HomeWindow();
+            homepage.Show();
+            this.Close();
+        }
+        private void btnDashboard_Click(object sender, RoutedEventArgs e)
+        {
+            mainContent.Content = new DashboardView(); // Gọi màn hình Dashboard
         }
         private void btnUserManage_Click(object sender, RoutedEventArgs e)
         {
+            mainContent.Content = new UserManage(havePermission);
+        }
+        private void btnBlogManage_Click(object sender, RoutedEventArgs e)
+        {
+            mainContent.Content = new BlogManageView(havePermission);
+        }
 
+        private void btnLogOut_Click(object sender, RoutedEventArgs e)
+        {
+            // Xóa session
+            Application.Current.Properties["UserLog"] = null;
+
+            // Mở lại màn hình Login
+            var homepage = new HomeWindow();
+            homepage.Show();
+
+            // Đóng cửa sổ hiện tại (ví dụ Dashboard, MainWindow, etc.)
+            this.Close();
         }
     }
 }

@@ -52,7 +52,7 @@ namespace SchoolHealthWPF.ParentPages
             var studentRepo = new StudentRepository();
             var studentService = new StudentService(studentRepo);
 
-           
+
             var students = studentService.GetStudentsByParentId(_parentId);
 
             if (students == null || !students.Any())
@@ -80,6 +80,11 @@ namespace SchoolHealthWPF.ParentPages
         {
             var homeWindow = new HomeWindow();
             homeWindow.Show();
+        }
+
+        private void btnHome_Click(object sender, RoutedEventArgs e)
+        {
+            this.Close();
         }
     }
 

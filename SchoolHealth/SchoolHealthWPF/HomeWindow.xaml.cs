@@ -1,5 +1,8 @@
 ﻿using BLL.Service;
 using DAL.Entities;
+using SchoolHealthWPF.AdminPages;
+using SchoolHealthWPF.NursePages;
+using SchoolHealthWPF.ParentPages;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -27,6 +30,13 @@ namespace SchoolHealthWPF
             InitializeComponent();
             _blogService = new BlogService();
         }
+        public enum Role
+        {
+            Admin,
+            Manager,
+            Nurse,
+            Parent
+        }
 
         private void CheckLoggedIn()
         {
@@ -35,16 +45,33 @@ namespace SchoolHealthWPF
             {
                 btnLogin.Visibility = Visibility.Visible;
                 btnLogout.Visibility = Visibility.Collapsed;
-            }else
+                btnDashboard.Visibility = Visibility.Collapsed;
+            }
+            else
             {
                 btnLogin.Visibility = Visibility.Collapsed;
                 btnLogout.Visibility = Visibility.Visible;
+                btnDashboard.Visibility = Visibility.Visible;
+            }
+        }
+
+        private void LoadWelcomeMessage()
+        {
+            var user = Application.Current.Properties["UserLog"] as UserAccount;
+            if (user != null)
+            {
+                welcomeMsg.Content = $"Chào mừng {user.Username} đã trở lại!";
+            }
+            else
+            {
+                welcomeMsg.Content = "Chào mừng";
             }
         }
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
             CheckLoggedIn();
+            LoadWelcomeMessage();
             LoadItemControll();
         }
 
@@ -83,6 +110,38 @@ namespace SchoolHealthWPF
 
             // Đóng cửa sổ hiện tại (ví dụ Dashboard, MainWindow, etc.)
             this.Close();
+        }
+        private void btnDashboard_Click(object sender, RoutedEventArgs e)
+        {
+            var user = Application.Current.Properties["UserLog"] as UserAccount;
+            try
+            {
+                if (user.Role == Role.Admin.ToString()
+                       || user.Role == Role.Manager.ToString())
+                {
+                    AdminWindow adminWindow = new AdminWindow();
+                    adminWindow.user = user;
+                    adminWindow.Role = user.Role == Role.Admin.ToString() ? 0 : 1;
+                    adminWindow.Show();
+                    this.Close();
+                }
+                if (user.Role == Role.Nurse.ToString())
+                {
+                    NurseWindow nurseWindow = new NurseWindow();
+                    nurseWindow.Show();
+                    this.Close();
+                }
+                if (user.Role == Role.Parent.ToString())
+                {
+                    ParentWindow parentWindow = new ParentWindow(user.ParentId ?? 0);
+                    parentWindow.Show();
+                    this.Close();
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Lỗi khi tải Dashboard: " + ex.Message);
+            }
         }
     }
 }

@@ -1,0 +1,74 @@
+﻿<UserControl x:Class="SchoolHealthWPF.AdminPages.BlogManageView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:SchoolHealthWPF.AdminPages"
+             mc:Ignorable="d" Background="WhiteSmoke"
+             Loaded="UserControl_Loaded"
+             d:DesignHeight="450" d:DesignWidth="650">
+    <Grid Margin="10">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+
+        <Label Content="Blog Manage View" Style="{StaticResource Title_1}" 
+               HorizontalAlignment="Left" Margin="0,0,0,10"/>
+
+        <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto">
+            <Grid Margin="5">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="4*" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+
+                <Border Grid.ColumnSpan="2" BorderThickness="1" BorderBrush="#D0D0D0" 
+                        CornerRadius="8" Background="White" Padding="5" Margin="0,0,0,10">
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                        <TextBox x:Name="txtSearch" Text="Tìm kiếm..." 
+                                 BorderBrush="Transparent"
+                                 Width="520" Height="40" VerticalContentAlignment="Center" 
+                                 Padding="10,0" FontSize="16"/>
+                        <Button x:Name="btnSearch" Content="Search"
+                                Style="{StaticResource PrimaryButtonStyle}"
+                                Click="BtnSearch_Click"/>
+                    </StackPanel>
+                </Border>
+                
+                <Border Grid.Row="1" MinHeight="280" BorderThickness="1" BorderBrush="#D0D0D0" 
+                        CornerRadius="8" Background="White" Padding="5">
+                    <DataGrid x:Name="dgBlogs" AutoGenerateColumns="False" CanUserAddRows="False" 
+                              RowBackground="#FFFFFF" AlternatingRowBackground="#F5F5F5" 
+                              GridLinesVisibility="Horizontal" FontSize="12">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="Tiêu đề" Binding="{Binding Title}" Width="100"/>
+                            <DataGridTextColumn Header="Tác giả" Binding="{Binding Author.Username}" Width="100"/>
+                            <DataGridTextColumn Header="Nội dung" Binding="{Binding Content}" Width="200"/>
+                            <DataGridTextColumn Header="Ngày đăng" Binding="{Binding DatePosted, StringFormat=dd/MM/yyyy}" Width="*"/>
+                        </DataGrid.Columns>
+                    </DataGrid>
+                </Border>
+
+                <UniformGrid Grid.Row="1" Grid.Column="1" Columns="1" Margin="5,0,0,0">
+                    <Button x:Name="btnUpdate" Content="Cập nhật" Height="40" Margin="0,0,0,5"
+                            BorderBrush="#3498DB" BorderThickness="1"
+                            Background="#3498DB" Foreground="White" FontWeight="Bold" 
+                            Click="btnUpdate_Click"/>
+                    <Button x:Name="btnCreate" Content="Tạo mới" Height="40" Margin="0,0,0,5" 
+                            BorderBrush="#34DB7A" BorderThickness="1"
+                            Background="#34DB7A" Foreground="White" FontWeight="Bold" 
+                            Click="btnCreate_Click"/>
+                    <Button x:Name="btnDelete" Content="Xóa" Height="40" Margin="0,0,0,5" 
+                            BorderBrush="#DB6A34" BorderThickness="1"
+                            Background="#DB6A34" Foreground="White" FontWeight="Bold" 
+                            Click="btnDelete_Click"/>
+                </UniformGrid>
+            </Grid>
+        </ScrollViewer>
+    </Grid>
+</UserControl>
